@@ -32,15 +32,6 @@ class CustomInput extends StatelessWidget {
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: 'Ingrese su $label',
-        suffix: InkResponse(
-          splashColor: Colors.teal[50],
-          onTap: () {
-            print('Mostrar contraseña');
-          },
-          child: Icon(
-            Icons.remove_red_eye,
-          ),
-        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
