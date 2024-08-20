@@ -18,9 +18,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routes: {'/home': (context) => const LoginScreen()},
+      routes: {
+        '/home': (context) => const LoginScreen(),
+        '/userpage': (context) => const LoginScreen(),
+        '/adminpage': (context) => const LoginScreen(),
+      },
       initialRoute: '/home',
     );
   }
 }
-
