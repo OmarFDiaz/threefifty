@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +11,12 @@ class LoginScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(child: Text('Hello world')),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushNamed(context, "/adminpage");
+        },
+        label: Text('Ir a admin page'),
+      ),
     );
   }
 }
-
-
-
