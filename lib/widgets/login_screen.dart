@@ -7,11 +7,39 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Screen'),
-        centerTitle: true,
+        title: const Text('Login'),
       ),
-      body: Center(child: Text('Hello world')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.lock, size: 50.0, color: Colors.blue[900]),
+            const SizedBox(height: 32.0),
+            TextField(
+              decoration: const InputDecoration(
+                hintText: 'Email',
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              decoration: const InputDecoration(
+                hintText: 'Password',
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 32.0),
+            ElevatedButton(
+              onPressed: () {
+                // TODO: Implement login logic
+              },
+              child: const Text('Login'),
+            ),
+          ],
+        ),
+      ),
     );
+
   }
 }
 
