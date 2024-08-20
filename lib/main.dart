@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/widgets/UserPage/user_page.dart';
 import 'package:myapp/widgets/login_screen.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/home': (context) => const LoginScreen(),
-        '/userpage': (context) => const LoginScreen(),
+        '/userpage': (context) =>  ClockPage(),
         '/adminpage': (context) => const LoginScreen(),
       },
       initialRoute: '/home',
