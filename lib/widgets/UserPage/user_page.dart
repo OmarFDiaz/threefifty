@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UserPage extends StatelessWidget {
-  const UserPage({super.key});
+  UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +11,12 @@ class UserPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(child: Text('Hello world')),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushNamed(context, "/home");
+        },
+        label: Text('Ir a login page'),
+      ),
     );
   }
 }
-
-
-
