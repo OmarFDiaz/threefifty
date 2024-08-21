@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myapp/widgets/reusable/custom_input.dart';
 
 import 'package:random_password_generator/random_password_generator.dart';
+
+import 'package:cloud_functions/cloud_functions.dart';
 
 class CreateUsersPage extends StatefulWidget {
   CreateUsersPage({super.key});
@@ -11,9 +15,19 @@ class CreateUsersPage extends StatefulWidget {
 }
 
 class _CreateUsersPageState extends State<CreateUsersPage> {
+  final auth = FirebaseAuth.instance;
+
   bool isLoading = false;
 
   bool isDone = false;
+
+  bool isError = false;
+
+  String errorMessage = '';
+
+  String successMessage = '';
+
+  String uid = '';
 
   final password = RandomPasswordGenerator();
 
@@ -23,28 +37,80 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
 
   final TextEditingController correoController = TextEditingController();
 
+  final TextEditingController passwordController = TextEditingController();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  void submitUser() {
+  Future<void> createUser(
+      {required String email,
+      required String password,
+      required String role,
+      required String nombre}) async {
+    HttpsCallable callable =
+        FirebaseFunctions.instance.httpsCallable('auth_create_user_admin');
+
+    try {
+      final results = await callable.call(<String, dynamic>{
+        'email': email,
+        'password': password,
+        'role': role,
+        'nombre': nombre,
+      });
+      print(results.data);
+      if (results.data == "Missing required parameter") {
+        isError = true;
+        errorMessage = results.data;
+        setState(() {});
+        return;
+      }
+
+      if (results.data['message'] == "Error creating user") {
+        print(results.data['message']);
+        isError = true;
+        errorMessage = results.data['message'];
+        setState(() {});
+        return;
+      }
+      if (results.data['message'] == "User created successfully") {
+        // Access the uid if needed
+        uid = results.data['uid'];
+        successMessage = results.data['message'];
+
+        print('User created with uid: $uid');
+
+        passwordController.text = newpassword;
+
+        isDone = true;
+        setState(() {});
+      }
+      return;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void submitUser() async {
     print('generating password');
 
     if (!formKey.currentState!.validate()) {
       return;
     }
+    isLoading = true;
+    setState(() {});
+
     newpassword = password.randomPassword(
         letters: true,
         numbers: true,
         passwordLength: 10,
         specialChar: true,
         uppercase: true);
-    final data = {
-      'nombre': nombreController.text,
-      'correo': correoController.text,
-      'contrasenia': newpassword,
-      'role': 'user'
-    };
-  }
 
+    createUser(
+        email: correoController.text,
+        password: newpassword,
+        role: 'user',
+        nombre: nombreController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +121,66 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
         backgroundColor: Colors.blue,
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? isError
+              ? Center(child: Text(errorMessage))
+              : Center(
+                  child: isDone
+                      ? SingleChildScrollView(
+                          child: Center(
+                              child: Column(
+                            children: [
+                              Text('Usuario Creado'),
+                              SizedBox(height: 20),
+                              Text(successMessage),
+                              SizedBox(height: 20),
+                              Text('Press copy button to copy to clipboard'),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: 200,
+                                  child: TextField(
+                                    enabled: false,
+                                    controller: passwordController,
+                                    decoration: InputDecoration(
+                                      labelText: "Password",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                      ),
+                                    ),
+                                    obscureText: false,
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Clipboard.setData(ClipboardData(
+                                        text: passwordController.text));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Password copied to clipboard')));
+                                  },
+                                  child: Text('Copy')),
+                              SizedBox(height: 20),
+                              Text('UID: $uid'),
+                              SizedBox(height: 20),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Back'))
+                            ],
+                          )),
+                        )
+                      : Column(
+                          children: [
+                            SizedBox(height: 100),
+                            Text('Creando el Usuario'),
+                            SizedBox(height: 20),
+                            CircularProgressIndicator(),
+                          ],
+                        ))
           : SingleChildScrollView(
               child: Form(
                 key: formKey,
