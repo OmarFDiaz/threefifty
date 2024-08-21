@@ -13,6 +13,7 @@ class _UserPageState extends State<ClockPage> {
   var isBreak = false;
   var isClockedOut = false;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +89,7 @@ class _UserPageState extends State<ClockPage> {
                     )
                   : Container(),
         ],
+
       ),
     );
   }
