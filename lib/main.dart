@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
+        '/userpage': (context) =>  ClockPage(),
         '/home': (context) => LoginScreen(),
-        '/userpage': (context) => UserPage(),
         '/adminpage': (context) => AdminPage(),
         '/createusers': (context) => CreateUsersPage(),
         '/listusers': (context) => ListUsersPage(),
