@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/widgets/reusable/custom_input.dart';
@@ -15,7 +15,6 @@ class CreateUsersPage extends StatefulWidget {
 }
 
 class _CreateUsersPageState extends State<CreateUsersPage> {
-  final auth = FirebaseAuth.instance;
 
   bool isLoading = false;
 
