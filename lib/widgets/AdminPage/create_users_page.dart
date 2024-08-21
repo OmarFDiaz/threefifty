@@ -50,6 +50,13 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
         FirebaseFunctions.instance.httpsCallable('auth_create_user_admin');
 
     try {
+      print('Data being Sent to the Function');
+      print({
+        'email': email,
+        'password': password,
+        'role': role,
+        'nombre': nombre,
+      });
       final results = await callable.call(<String, dynamic>{
         'email': email,
         'password': password,
@@ -64,8 +71,8 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
         return;
       }
 
-      if (results.data['message'] == "Error creating user") {
-        print(results.data['message']);
+      if (results.data['error'] == "Error creating user") {
+        print(results.data['error']);
         isError = true;
         errorMessage = results.data['message'];
         setState(() {});
@@ -85,6 +92,9 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
       }
       return;
     } catch (e) {
+      isError = true;
+      errorMessage = "Hubo un error al crear el usuario.";
+      setState(() {});
       print(e);
     }
   }
@@ -122,7 +132,23 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
       ),
       body: isLoading
           ? isError
-              ? Center(child: Text(errorMessage))
+              ? Center(
+                  child: Column(
+                  children: [
+                    SizedBox(height: 100),
+                    Text('Error'),
+                    SizedBox(height: 20),
+                    Text(errorMessage, textAlign: TextAlign.center,),
+                    SizedBox(height: 20),
+                    Text('Puede ser que el correo ya esté en uso'),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Back'))
+                  ],
+                ))
               : Center(
                   child: isDone
                       ? SingleChildScrollView(
