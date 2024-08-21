@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:one_clock/one_clock.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class ClockPage extends StatefulWidget {
-  const ClockPage({super.key});
 
+class ClockPage extends StatefulWidget   {
+   const ClockPage({super.key});
   @override
   State<ClockPage> createState() => _UserPageState();
 }
@@ -12,7 +14,6 @@ class _UserPageState extends State<ClockPage> {
   var isClockedIn = false;
   var isBreak = false;
   var isClockedOut = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,6 @@ class _UserPageState extends State<ClockPage> {
       ),
       body: Column(
         children: [
-          // Center(child: Text('Hello world')),
           Center(
             child: AnalogClock(
               height: 300.0,
@@ -60,37 +60,161 @@ class _UserPageState extends State<ClockPage> {
                   child: Text('Clock In'),
                 )
               : ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
                   onPressed: () {
-                    setState(() {
-                      isClockedIn = false;
-                    });
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return clockOutDialog();
+                      },
+                    );
                   },
-                  child: Text('Clock Out'),
+                  child: Text(
+                    'Clock Out',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
                 ),
-
+          SizedBox(height: 30, width: 10),
           //break buttons
           (!isBreak && isClockedIn)
               ? ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green[200],
+                  ),
                   onPressed: () {
-                    setState(() {
-                      isBreak = true;
-                    });
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return clockOutDialog();
+                        });
                   },
                   child: Text('Take a Break'),
                 )
               : (isClockedIn && isBreak)
                   ? ElevatedButton(
                       onPressed: () {
-                        setState(() {
-                          isBreak = false;
-                        });
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return endBreaktDialog();
+                            });
                       },
                       child: Text('End Break'),
                     )
                   : Container(),
         ],
-
       ),
     );
   }
+
+  AlertDialog clockInDialog() {
+    return AlertDialog(
+      title: const Text('Warning'),
+      content: const Text('Are you sure you want to clock in?'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            setState(() {
+              isClockedIn = false;
+            });
+            Navigator.of(context).pop();
+          },
+          child: const Text(
+            'Clock In',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+          ),
+        ),
+      ],
+    );
+  }
+
+  AlertDialog clockOutDialog() {
+    return AlertDialog(
+      title: const Text('Warning'),
+      content: const Text('Are you sure you want to clock out?'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            setState(() {
+              isClockedIn = false;
+            });
+            Navigator.of(context).pop();
+          },
+          child: const Text(
+            'Clock Out',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+          ),
+        ),
+      ],
+    );
+  }
+
+  AlertDialog startBreaktDialog() {
+    return AlertDialog(
+      title: const Text('Warning'),
+      content: const Text('Are you sure you want to take a break?'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            setState(() {
+              isClockedIn = false;
+            });
+            Navigator.of(context).pop();
+          },
+          child: const Text(
+            'Start break',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+          ),
+        ),
+      ],
+    );
+  }
+
+  AlertDialog endBreaktDialog() {
+    return AlertDialog(
+      title: const Text('Warning'),
+      content: const Text('Are you sure you want to end your break?'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            setState(() {
+              isClockedIn = false;
+            });
+            Navigator.of(context).pop();
+          },
+          child: const Text(
+            'End break',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+          ),
+        ),
+      ],
+    );
+  } //
 }
