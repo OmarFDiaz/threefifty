@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:http/http.dart';
 
 class ListUsersPage extends StatefulWidget {
   ListUsersPage({super.key});
@@ -14,6 +13,8 @@ class _ListUsersPageState extends State<ListUsersPage> {
       FirebaseFunctions.instance.httpsCallable('get_users');
 
   List users = [];
+
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -37,15 +38,28 @@ class _ListUsersPageState extends State<ListUsersPage> {
                   'email': userData['email'],
                 })
             .toList();
+        isLoading = false;
       });
     }
   }
 
   void refresh() async {
+    isLoading = true;
+    setState(() {});
     await getUsers();
   }
 
-  void deleteUsers() async {
+  void deleteUser({required String uid}) async {
+    isLoading = true;
+    setState(() {});
+    HttpsCallable callable =
+        FirebaseFunctions.instance.httpsCallable('delete_user');
+    final response = await callable.call(<String, dynamic>{
+      'uid': uid,
+    });
+
+    print(response.data);
+
     await getUsers();
   }
 
@@ -58,20 +72,46 @@ class _ListUsersPageState extends State<ListUsersPage> {
           IconButton(onPressed: refresh, icon: Icon(Icons.refresh)),
         ],
       ),
-      body: Center(
-        child: ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              final user = users[index];
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Center(
+              child: ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    final user = users[index];
+                    print(user);
 
-              return ListTile(
-                title: Text(user['displayName']),
-                subtitle: Text(user['email']),
-                trailing:
-                    IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
-              );
-            },
-            itemCount: users.length),
-      ),
+                    return ListTile(
+                      title: Text(user['displayName']),
+                      subtitle: Text(user['email']),
+                      trailing: IconButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Eliminar Usuario'),
+                                    content: Text(
+                                        '¿Estás seguro de que deseas eliminar este usuario?'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('Cancel')),
+                                      TextButton(
+                                          onPressed: () {
+                                            deleteUser(uid: user['uid']);
+                                          },
+                                          child: Text('Delete',selectionColor: Colors.red,))
+                                    ],
+                                  );
+                                });
+                          },
+                          icon: Icon(Icons.delete)),
+                    );
+                  },
+                  itemCount: users.length),
+            ),
     );
   }
 }
