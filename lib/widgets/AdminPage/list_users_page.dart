@@ -74,44 +74,50 @@ class _ListUsersPageState extends State<ListUsersPage> {
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : Center(
-              child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    final user = users[index];
-                    print(user);
+          : users.isEmpty
+              ? Center(child: Text('No hay usuarios'))
+              : Center(
+                  child: ListView.builder(
+                      itemBuilder: (BuildContext context, int index) {
+                        final user = users[index];
+                        print(user);
 
-                    return ListTile(
-                      title: Text(user['displayName']),
-                      subtitle: Text(user['email']),
-                      trailing: IconButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Eliminar Usuario'),
-                                    content: Text(
-                                        '¿Estás seguro de que deseas eliminar este usuario?'),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('Cancel')),
-                                      TextButton(
-                                          onPressed: () {
-                                            deleteUser(uid: user['uid']);
-                                          },
-                                          child: Text('Delete',selectionColor: Colors.red,))
-                                    ],
-                                  );
-                                });
-                          },
-                          icon: Icon(Icons.delete)),
-                    );
-                  },
-                  itemCount: users.length),
-            ),
+                        return ListTile(
+                          title: Text(user['displayName']),
+                          subtitle: Text(user['email']),
+                          trailing: IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Eliminar Usuario'),
+                                        content: Text(
+                                            '¿Estás seguro de que deseas eliminar este usuario?'),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Cancel')),
+                                          TextButton(
+                                              onPressed: () {
+                                                deleteUser(uid: user['uid']);
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                'Delete',
+                                                selectionColor: Colors.red,
+                                              ))
+                                        ],
+                                      );
+                                    });
+                              },
+                              icon: Icon(Icons.delete)),
+                        );
+                      },
+                      itemCount: users.length),
+                ),
     );
   }
 }
