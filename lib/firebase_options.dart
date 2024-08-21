@@ -61,9 +61,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCvmZXS9gRbxVUAzoSkYzKjpNC0XikKpvI',
-    appId: '1:1010429312733:android:bf7f36055408e48c22a534',
+    appId: '1:1010429312733:android:400edf72e97ff08322a534',
     messagingSenderId: '1010429312733',
     projectId: 'threefiddy-331b2',
     storageBucket: 'threefiddy-331b2.appspot.com',
   );
+
 }
