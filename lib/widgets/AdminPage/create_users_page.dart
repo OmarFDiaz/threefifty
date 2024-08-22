@@ -32,6 +32,8 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
 
   String newpassword = '';
 
+  bool isAdmin = false;
+
   final TextEditingController nombreController = TextEditingController();
 
   final TextEditingController correoController = TextEditingController();
@@ -58,7 +60,7 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
       });
       final results = await callable.call(<String, dynamic>{
         'email': email,
-        'password': password,
+        'password': "Cambio@@123",
         'role': role,
         'nombre': nombre,
       });
@@ -106,6 +108,8 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
     }
     isLoading = true;
     setState(() {});
+
+    
 
     newpassword = password.randomPassword(
         letters: true,
