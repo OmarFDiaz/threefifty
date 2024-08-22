@@ -19,7 +19,8 @@ class FirestoreMethods {
 
       // Add a new work session
       await workSessions.add({
-        'day': '${DateTime.now()} - ${DateTime.now().day}',
+        'day':
+            '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}',
         'startTime': Timestamp.fromDate(startTime),
         'breakTimeStart': Timestamp.fromDate(endTime),
         'breakTimeEnd': Timestamp.fromDate(endTime),
@@ -38,13 +39,16 @@ class FirestoreMethods {
       {required String userId, required DateTime startTime}) async {
     try {
       // Reference the subcollection 'workSessions' inside the user's document
-      CollectionReference workSessions = _firestore
+
+      final workSessions = _firestore
           .collection('users')
           .doc(userId)
-          .collection('${DateTime.now()} - ${DateTime.now().day}');
+          .collection('workSessions')
+          .doc(
+              '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}');
 
       // Add a new work session
-      await workSessions.add({
+      await workSessions.set({
         'startTime': Timestamp.fromDate(startTime),
       });
 
@@ -58,13 +62,15 @@ class FirestoreMethods {
       {required String userId, required DateTime breakTimeStart}) async {
     try {
       // Reference the subcollection 'workSessions' inside the user's document
-      CollectionReference workSessions = _firestore
+      final workSessions = _firestore
           .collection('users')
           .doc(userId)
-          .collection('${DateTime.now()} - ${DateTime.now().day}');
+          .collection('workSessions')
+          .doc(
+              '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}');
 
       // Add a new work session
-      await workSessions.add({
+      await workSessions.update({
         'breakTimeStart': Timestamp.fromDate(breakTimeStart),
       });
 
@@ -81,7 +87,8 @@ class FirestoreMethods {
       CollectionReference workSessions = _firestore
           .collection('users')
           .doc(userId)
-          .collection('${DateTime.now()} - ${DateTime.now().day}');
+          .collection(
+              '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}');
 
       // Add a new work session
       await workSessions.add({
@@ -98,15 +105,18 @@ class FirestoreMethods {
       {required String userId, required DateTime Endtime}) async {
     try {
       // Reference the subcollection 'workSessions' inside the user's document
-      CollectionReference workSessions = _firestore
+      final workSessions = _firestore
           .collection('users')
           .doc(userId)
-          .collection('${DateTime.now()} - ${DateTime.now().day}');
+          .collection('workSessions')
+          .doc(
+              '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}');
 
       // Add a new work session
-      await workSessions.add({
-        'Endtime': Timestamp.fromDate(Endtime),
+      await workSessions.update({
+        'endTime': Timestamp.fromDate(Endtime),
       });
+
 
       print("Work session logged successfully!");
     } catch (e) {

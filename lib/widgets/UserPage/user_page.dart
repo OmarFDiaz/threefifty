@@ -62,10 +62,16 @@ class _UserPageState extends State<ClockPage> {
           !isClockedIn
               ? ElevatedButton(
                   onPressed: () {
-                    setState(() {
-                      isClockedIn = true;
-                      clockInDialog();
-                    });
+                    isClockedIn = true;
+
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return clockInDialog();
+                      },
+                    );
+
+                    setState(() {});
                   },
                   child: Text('Clock In'),
                 )
@@ -161,9 +167,9 @@ class _UserPageState extends State<ClockPage> {
         ),
         TextButton(
           onPressed: () {
-            setState(() {
-              isClockedIn = false;
-            });
+            isClockedIn = false;
+            firestoreMethods.EndDay(userId: user!.uid, Endtime: DateTime.now());
+            setState(() {});
             Navigator.of(context).pop();
           },
           child: const Text(
