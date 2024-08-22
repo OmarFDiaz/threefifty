@@ -60,30 +60,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 32.0),
               ElevatedButton(
-                onPressed: () async {
-                  print('Login button pressed');
-
-                  HttpsCallable callable = FirebaseFunctions.instance
-                      .httpsCallable('get_users_custom_token');
-
-                  try {
-                    print('Data being Sent to the Function');
-                    print({
-                      'email': correoController.text,
-                      'password': contraseniaController.text,
-                    });
-
-                    final result = await callable.call(<String, dynamic>{
-                      'email': correoController.text,
-                      'password': contraseniaController.text,
-                    });
-
-                    print(result.data);
-                  } catch (e) {
-                    print('Errrrooooor');
-                    print(e);
-                  }
-                },
+                onPressed: () async {},
+                  
                 child: const Text('Login'),
               ),
               ElevatedButton(
