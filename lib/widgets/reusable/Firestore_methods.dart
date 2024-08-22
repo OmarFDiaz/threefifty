@@ -122,4 +122,39 @@ class FirestoreMethods {
       print("Error logging work session: $e");
     }
   }
+
+    Future<DocumentSnapshot<Map<String, dynamic>>> getWorkSessions(
+      {required String userId}) async {
+    try {
+      final workSessions = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('workSessions')
+          .doc(
+              '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}')
+          .get();
+      return workSessions;
+    } catch (e) {
+      print("Error getting work sessions: $e");
+      rethrow;
+    }
+  }
+
+
+  // Future<void> getWorkSessions({required String userId}) async {
+  //   Future<void> getWorkSessions({required String userId}) async {
+  //     try {
+  //       final workSessions = await _firestore
+  //           .collection('users')
+  //           .doc(userId)
+  //           .collection('workSessions')
+  //           .doc(
+  //               '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}')
+  //           .get();
+  //       return workSessions;
+  //     } catch (e) {
+  //       print("Error getting work sessions: $e");
+  //     }
+  //   }
+  // }
 }

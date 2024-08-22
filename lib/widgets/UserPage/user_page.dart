@@ -13,6 +13,7 @@ class ClockPage extends StatefulWidget {
 
 class _UserPageState extends State<ClockPage> {
   var isClockedIn = false;
+  var breakCount = 0;
   var isBreak = false;
   var isClockedOut = false;
   final user = FirebaseAuth.instance.currentUser;
@@ -22,6 +23,24 @@ class _UserPageState extends State<ClockPage> {
   void initState() {
     super.initState();
     Firebase.initializeApp();
+
+    var data = firestoreMethods.getWorkSessions(userId: user!.uid);
+    data.then((value) {
+      value["EndTime"] == null
+          ? setState(() {
+              isClockedIn = true;
+            })
+          : setState(() {
+              isClockedIn = false;
+            });
+      value["breakTimeEnd"] == null
+          ? setState(() {
+              isBreak = true;
+            })
+          : setState(() {
+              isBreak = false;
+            });
+    });
   }
 
   @override
@@ -195,6 +214,7 @@ class _UserPageState extends State<ClockPage> {
         TextButton(
           onPressed: () {
             setState(() {
+              breakCount++;
               isClockedIn = false;
             });
             Navigator.of(context).pop();
