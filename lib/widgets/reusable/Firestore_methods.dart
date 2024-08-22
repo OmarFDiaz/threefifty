@@ -70,9 +70,9 @@ class FirestoreMethods {
               '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}');
 
       // Add a new work session
-      await workSessions.update({
+      await workSessions.set({
         'breakTimeStart': Timestamp.fromDate(breakTimeStart),
-      });
+      }, SetOptions(merge: true));
 
       print("Work session logged successfully!");
     } catch (e) {
@@ -113,10 +113,9 @@ class FirestoreMethods {
               '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}');
 
       // Add a new work session
-      await workSessions.update({
-        'endTime': Timestamp.fromDate(Endtime),
-      });
-
+      await workSessions.set({
+        'Endtime': Timestamp.fromDate(Endtime),
+      }, SetOptions(merge: true));
 
       print("Work session logged successfully!");
     } catch (e) {
