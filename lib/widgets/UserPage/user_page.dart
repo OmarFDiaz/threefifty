@@ -133,10 +133,10 @@ class _UserPageState extends State<ClockPage> {
         ),
         TextButton(
           onPressed: () {
-            setState(() {
-              firestoreMethods.StartDay(
-                  userId: user!.uid, startTime: DateTime.now());
-            });
+            print(user!.uid);
+            firestoreMethods.StartDay(
+                userId: user!.uid, startTime: DateTime.now());
+            setState(() {});
             Navigator.of(context).pop();
           },
           child: const Text(
