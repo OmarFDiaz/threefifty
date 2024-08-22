@@ -40,6 +40,7 @@ dependencies:
   random_password_generator: ^0.2.1
   firebase_core: ^2.24.2
   firebase_auth: ^4.16.0
+  cloud_functions: ^4.6.0
 
 dev_dependencies:
   flutter_test:

@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyATDP7aw4OK82-T_Ysk6m3XOnSbXJCtlV4',
-    appId: '1:1010429312733:web:7d05b70d249d7f0b22a534',
-    messagingSenderId: '1010429312733',
-    projectId: 'threefiddy-331b2',
-    authDomain: 'threefiddy-331b2.firebaseapp.com',
-    storageBucket: 'threefiddy-331b2.appspot.com',
-    measurementId: 'G-2W0FZ3TMVV',
+    apiKey: 'AIzaSyAZl7p8CGLxcOXFjlcAqnsqVlQWVuy5t98',
+    appId: '1:176333352860:web:0442f26dea17708d40e259',
+    messagingSenderId: '176333352860',
+    projectId: 'fhreetiddy',
+    authDomain: 'fhreetiddy.firebaseapp.com',
+    storageBucket: 'fhreetiddy.appspot.com',
+    measurementId: 'G-V16YX1WL3Y',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCvmZXS9gRbxVUAzoSkYzKjpNC0XikKpvI',
-    appId: '1:1010429312733:android:400edf72e97ff08322a534',
-    messagingSenderId: '1010429312733',
-    projectId: 'threefiddy-331b2',
-    storageBucket: 'threefiddy-331b2.appspot.com',
+    apiKey: 'AIzaSyD-e09Qyw-ZNDNQwJrESSBjxySWqOA4iNI',
+    appId: '1:176333352860:android:685713bb972b6ba140e259',
+    messagingSenderId: '176333352860',
+    projectId: 'fhreetiddy',
+    storageBucket: 'fhreetiddy.appspot.com',
   );
-
 }
