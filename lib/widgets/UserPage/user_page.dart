@@ -1,11 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/widgets/reusable/Firestore_methods.dart';
 import 'package:one_clock/one_clock.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
-class ClockPage extends StatefulWidget   {
-   const ClockPage({super.key});
+class ClockPage extends StatefulWidget {
+  const ClockPage({super.key});
   @override
   State<ClockPage> createState() => _UserPageState();
 }
@@ -14,6 +15,14 @@ class _UserPageState extends State<ClockPage> {
   var isClockedIn = false;
   var isBreak = false;
   var isClockedOut = false;
+  final user = FirebaseAuth.instance.currentUser;
+  FirestoreMethods firestoreMethods = FirestoreMethods();
+
+  @override
+  void initState() {
+    super.initState();
+    Firebase.initializeApp();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +64,7 @@ class _UserPageState extends State<ClockPage> {
                   onPressed: () {
                     setState(() {
                       isClockedIn = true;
+                      clockInDialog();
                     });
                   },
                   child: Text('Clock In'),
@@ -124,7 +134,8 @@ class _UserPageState extends State<ClockPage> {
         TextButton(
           onPressed: () {
             setState(() {
-              isClockedIn = false;
+              firestoreMethods.StartDay(
+                  userId: user!.uid, startTime: DateTime.now());
             });
             Navigator.of(context).pop();
           },
