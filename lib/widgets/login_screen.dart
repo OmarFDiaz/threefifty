@@ -124,18 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: const Text('Login'),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/adminpage');
-                        },
-                        child: const Text('Admin Page'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/userpage');
-                        },
-                        child: const Text('UserPage'),
-                      ),
+                      
                     ],
                   ),
                 ),
