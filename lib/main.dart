@@ -1,11 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/firebase_options.dart';
 import 'package:myapp/widgets/AdminPage/admin_page.dart';
 import 'package:myapp/widgets/AdminPage/create_users_page.dart';
 import 'package:myapp/widgets/AdminPage/list_users_page.dart';
 import 'package:myapp/widgets/UserPage/user_page.dart';
 import 'package:myapp/widgets/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(MyApp());
 }
 
@@ -23,7 +32,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/userpage': (context) =>  ClockPage(),
+        '/userpage': (context) => ClockPage(),
         '/home': (context) => LoginScreen(),
         '/adminpage': (context) => AdminPage(),
         '/createusers': (context) => CreateUsersPage(),

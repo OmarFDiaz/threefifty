@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1010429312733",
-    "project_id": "threefiddy-331b2",
-    "storage_bucket": "threefiddy-331b2.appspot.com"
+    "project_number": "176333352860",
+    "project_id": "fhreetiddy",
+    "storage_bucket": "fhreetiddy.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1010429312733:android:bf7f36055408e48c22a534",
+        "mobilesdk_app_id": "1:176333352860:android:685713bb972b6ba140e259",
         "android_client_info": {
-          "package_name": "com.example.app"
+          "package_name": "com.example.myapp"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCvmZXS9gRbxVUAzoSkYzKjpNC0XikKpvI"
+          "current_key": "AIzaSyD-e09Qyw-ZNDNQwJrESSBjxySWqOA4iNI"
         }
       ],
       "services": {
