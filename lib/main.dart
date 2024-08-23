@@ -83,8 +83,7 @@ class _MyAppState extends State<MyApp> {
         '/createusers': (context) => CreateUsersPage(),
         '/listusers': (context) => ListUsersPage(),
         '/login': (context) => LoginScreen(),
-      },
-      initialRoute: '/home',
+      }
     );
   }
 }
