@@ -84,16 +84,17 @@ class FirestoreMethods {
       {required String userId, required DateTime breakTimeEnd}) async {
     try {
       // Reference the subcollection 'workSessions' inside the user's document
-      CollectionReference workSessions = _firestore
+      final workSessions = _firestore
           .collection('users')
           .doc(userId)
-          .collection(
+          .collection('workSessions')
+          .doc(
               '${DateTime.now().year} - ${DateTime.now().month} - ${DateTime.now().day}');
 
       // Add a new work session
-      await workSessions.add({
+      await workSessions.set({
         'breakTimeEnd': Timestamp.fromDate(breakTimeEnd),
-      });
+      }, SetOptions(merge: true));
 
       print("Work session logged successfully!");
     } catch (e) {
@@ -123,7 +124,7 @@ class FirestoreMethods {
     }
   }
 
-    Future<DocumentSnapshot<Map<String, dynamic>>> getWorkSessions(
+  Future<DocumentSnapshot<Map<String, dynamic>>> getWorkSessions(
       {required String userId}) async {
     try {
       final workSessions = await _firestore
@@ -139,7 +140,6 @@ class FirestoreMethods {
       rethrow;
     }
   }
-
 
   // Future<void> getWorkSessions({required String userId}) async {
   //   Future<void> getWorkSessions({required String userId}) async {

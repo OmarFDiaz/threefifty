@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+
 //hola mundo
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController contraseniaController = TextEditingController();
@@ -80,40 +81,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() {});
 
                           try {
-                            final result = await FirebaseAuth.instance
+                            await FirebaseAuth.instance
                                 .signInWithEmailAndPassword(
                               email: correoController.text,
                               password: contraseniaController.text,
                             );
-                            print(result.user!.uid);
-                            try {
-                              final data = await FirebaseFirestore.instance
-                                  .collection('users')
-                                  .doc(result.user!.uid)
-                                  .get();
-                              print(data.data()!['role']);
-
-                              if (data.data()!['role'] == 'admin') {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AdminPage(),
-                                  ),
-                                  (route) => false,
-                                );
-                              } else {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ClockPage(),
-                                  ),
-                                  (route) => false,
-                                );
-                              }
-                            } catch (e) {
-                              print('error en firestore');
-                              print(e);
-                            }
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'user-not-found') {
                               print('No se encontró el usuario.');
@@ -124,7 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: const Text('Login'),
                       ),
-                      
                     ],
                   ),
                 ),
