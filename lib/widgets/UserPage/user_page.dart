@@ -80,7 +80,7 @@ class _UserPageState extends State<ClockPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Clock Screen'),
+        title: Text('Pantalla Clock'),
         centerTitle: true,
         actions: [
           IconButton(onPressed: checkDayStatus, icon: Icon(Icons.refresh)),
@@ -169,7 +169,7 @@ class _UserPageState extends State<ClockPage> {
                                 return startBreaktDialog();
                               });
                         },
-                        child: Text('Take a Break'),
+                        child: Text('Iniciar Descanso'),
                       )
                     : isLunchOver
                         ? Container()
@@ -182,7 +182,7 @@ class _UserPageState extends State<ClockPage> {
                                         return endBreaktDialog();
                                       });
                                 },
-                                child: Text('End Break'),
+                                child: Text('Terminar Descanso'),
                               )
                             : Container(),
               ],
@@ -192,14 +192,14 @@ class _UserPageState extends State<ClockPage> {
 
   AlertDialog clockInDialog() {
     return AlertDialog(
-      title: const Text('Warning'),
-      content: const Text('Are you sure you want to clock in?'),
+      title: const Text('Advertencia'),
+      content: const Text('Esta Seguro que desea hacer clock in?'),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('Cancel'),
+          child: const Text('Cancelar'),
         ),
         TextButton(
           onPressed: () async {
@@ -210,7 +210,7 @@ class _UserPageState extends State<ClockPage> {
           },
           child: const Text(
             'Clock In',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.purple),
           ),
         ),
       ],
@@ -219,14 +219,14 @@ class _UserPageState extends State<ClockPage> {
 
   AlertDialog clockOutDialog() {
     return AlertDialog(
-      title: const Text('Warning'),
-      content: const Text('Are you sure you want to clock out?'),
+      title: const Text('Advertencia'),
+      content: const Text('Esta seguro que desea hacer clock out?'),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancel'),
+          child: Text('Cancelar'),
         ),
         TextButton(
           onPressed: () async {
@@ -246,14 +246,14 @@ class _UserPageState extends State<ClockPage> {
 
   AlertDialog startBreaktDialog() {
     return AlertDialog(
-      title: const Text('Warning'),
-      content: const Text('Are you sure you want to take a break?'),
+      title: const Text('Advertencia'),
+      content: const Text('Esta seguro que desea iniciar su Descanso?'),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('Cancel'),
+          child: const Text('Cancelar'),
         ),
         TextButton(
           onPressed: () async {
@@ -263,8 +263,8 @@ class _UserPageState extends State<ClockPage> {
             checkDayStatus();
           },
           child: const Text(
-            'Start break',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+            'Iniciar Descanso',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
           ),
         ),
       ],
@@ -273,14 +273,14 @@ class _UserPageState extends State<ClockPage> {
 
   AlertDialog endBreaktDialog() {
     return AlertDialog(
-      title: const Text('Warning'),
-      content: const Text('Are you sure you want to end your break?'),
+      title: const Text('Advertencia'),
+      content: const Text('Esta seguro que desea terminar su Descanso?'),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('Cancel'),
+          child: const Text('Cancelar'),
         ),
         TextButton(
           onPressed: () async {
@@ -291,7 +291,7 @@ class _UserPageState extends State<ClockPage> {
             checkDayStatus();
           },
           child: const Text(
-            'End break',
+            'Terminar Descanso',
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
           ),
         ),
