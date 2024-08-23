@@ -87,6 +87,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               password: contraseniaController.text,
                             );
                           } on FirebaseAuthException catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Login no completado. Verifica tu correo y contraseña.'),
+                            ));
+
+                            loading = false;
+                            contraseniaController.text = '';
+                            setState(() {});
+
                             if (e.code == 'user-not-found') {
                               print('No se encontró el usuario.');
                             } else if (e.code == 'wrong-password') {

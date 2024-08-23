@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/widgets/reusable/custom_input.dart';
@@ -15,7 +14,6 @@ class CreateUsersPage extends StatefulWidget {
 }
 
 class _CreateUsersPageState extends State<CreateUsersPage> {
-
   bool isLoading = false;
 
   bool isDone = false;
@@ -60,7 +58,7 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
       });
       final results = await callable.call(<String, dynamic>{
         'email': email,
-        'password': "Cambio@@123",
+        'password': password,
         'role': role,
         'nombre': nombre,
       });
@@ -109,8 +107,6 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
     isLoading = true;
     setState(() {});
 
-    
-
     newpassword = password.randomPassword(
         letters: true,
         numbers: true,
@@ -141,7 +137,10 @@ class _CreateUsersPageState extends State<CreateUsersPage> {
                     SizedBox(height: 100),
                     Text('Error'),
                     SizedBox(height: 20),
-                    Text(errorMessage, textAlign: TextAlign.center,),
+                    Text(
+                      errorMessage,
+                      textAlign: TextAlign.center,
+                    ),
                     SizedBox(height: 20),
                     Text('Puede ser que el correo ya esté en uso'),
                     SizedBox(height: 20),
