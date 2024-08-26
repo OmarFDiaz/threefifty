@@ -87,7 +87,7 @@ class _UserPageState extends State<ClockPage> {
           IconButton(onPressed: logout, icon: Icon(Icons.logout)),
         ],
       ),
-      body: !isLoading
+      body: isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
